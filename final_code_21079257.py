@@ -164,33 +164,3 @@ plt.xlabel("years")
 plt.ylabel("GDP of Portugal")
 plt.show()
 print()
-
-# find a feasible start value the pedestrian way
-# the scale factor is way too small. The exponential factor too large.
-# Try scaling with the GDP in 2017 and a smaller exponential factor
-# decrease or increase exponential factor until rough agreement is reached
-# growth of -1.04193486e-20 gives a reasonable start value
-GDP = [3.34582, -1.04193486e-20]
-df_GDP_ult["gdp_exp"] = exp_growth(Portugal, *GDP)
-plt.figure()
-plt.plot(years, Portugal, label="data")
-plt.plot(years, df_GDP_ult["gdp_exp"], label="fit")
-plt.legend()
-plt.xlabel("years")
-plt.ylabel("GDP of Portugal")
-plt.title("Improved start value")
-plt.show()
-
-# fit exponential growth
-GDP, covar = opt.curve_fit(exp_growth, years, Portugal)
-print("Fit parameter", GDP)
-df_GDP_ult["gdp_exp"] = exp_growth(Portugal, *GDP)
-plt.figure()
-plt.plot(years, Portugal, label="data")
-plt.plot(years, df_GDP_ult["gdp_exp"], label="fit")
-plt.legend()
-plt.xlabel("years")
-plt.ylabel("GDP of Portugal")
-plt.title("Final fitting")
-plt.show()
-print()
