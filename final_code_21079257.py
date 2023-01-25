@@ -94,14 +94,14 @@ df_fit = df_CO2[['1996 [YR1996]'	, '2017 [YR2017]']].copy()
 df_fit = norm_df(df_fit)
 print(df_fit.describe())
 
-# calculating silhouette_score
+# calculating silhouette score
 for ic in range(2, 12):
     kmeans = cluster.KMeans(n_clusters=ic)
     kmeans.fit(df_fit)
     labels = kmeans.labels_
     print(ic, skmet.silhouette_score(df_fit, labels))
 
-# plotting scatter graph
+# plotting scatter plot
 kmeans = cluster.KMeans(n_clusters=2)
 kmeans.fit(df_fit)
 labels = kmeans.labels_
@@ -110,12 +110,12 @@ plt.figure(figsize=(6.0, 6.0))
 plt.scatter(df_fit["1996 [YR1996]"],
             df_fit["2017 [YR2017]"], c=labels, cmap="Accent")
 
-# finding the centroid
+# finding the centroid of the cluster
 for ic in range(2):
     xc, yc = cen[ic, :]
     plt.plot(xc, yc, "dk", markersize=10)
 
-# labeling the plot
+# labeling the cluster plot
 plt.xlabel("1996 [YR1996]")
 plt.ylabel("2017 [YR2017]")
 plt.title("2 clusters")
@@ -142,7 +142,7 @@ def read(file_name):
     return data, data_transpose, data_ult
 
 
-# calling the Function
+# calling the function
 df_GDP, df_GDP_t, df_GDP_ult = read("GDP_234.csv")
 
 # converting into arrays
@@ -153,8 +153,7 @@ Portugal = np.array(df_GDP_ult.Portugal.values)
 GDP, covar = opt.curve_fit(exp_growth, years, Portugal)
 print("Fit parameter", GDP)
 
-
-# use *popt to pass on the fit parameters
+# use *GDP to pass on the fit parameters
 df_GDP_ult["gdp_exp"] = exp_growth(Portugal, *GDP)
 plt.figure()
 plt.plot(years, Portugal, label="data")
@@ -168,7 +167,7 @@ print()
 
 # find a feasible start value the pedestrian way
 # the scale factor is way too small. The exponential factor too large.
-# Try scaling with the 2017 gdp and a smaller exponential factor
+# Try scaling with the GDP in 2017 and a smaller exponential factor
 # decrease or increase exponential factor until rough agreement is reached
 # growth of -1.04193486e-20 gives a reasonable start value
 GDP = [3.34582, -1.04193486e-20]
@@ -183,8 +182,7 @@ plt.title("Improved start value")
 plt.show()
 
 # fit exponential growth
-popt, covar = opt.curve_fit(exp_growth, years, Portugal)
-# much better
+GDP, covar = opt.curve_fit(exp_growth, years, Portugal)
 print("Fit parameter", GDP)
 df_GDP_ult["gdp_exp"] = exp_growth(Portugal, *GDP)
 plt.figure()
