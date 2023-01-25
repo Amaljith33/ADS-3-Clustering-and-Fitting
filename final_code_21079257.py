@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 import scipy.optimize as opt
 
 
+# For Clustering(K-mean clustering)
+
+
 def read(file_name):
     """
     This function is for reading the csv dataset returning the
@@ -72,13 +75,6 @@ def norm_df(df, first=0, last=None):
     return df
 
 
-def exp_growth(t, scale, growth):
-    """ Computes exponential function with scale and growth as free parameters
-    """
-    f = scale * np.exp(growth * (t-1950))
-    return f
-
-
 # calling the functions
 df_CO2, df_CO2_t = read("CO2_123.csv")
 
@@ -121,6 +117,8 @@ plt.ylabel("2017 [YR2017]")
 plt.title("2 clusters")
 plt.show()
 
+# For Fitting
+
 
 def read(file_name):
     """
@@ -140,6 +138,13 @@ def read(file_name):
     data_final = data_transpose.tail(10)
     data_ult = data_final.head(9)
     return data, data_transpose, data_ult
+
+
+def exp_growth(t, scale, growth):
+    """ Computes exponential function with scale and growth as free parameters
+    """
+    f = scale * np.exp(growth * (t-1950))
+    return f
 
 
 # calling the function
